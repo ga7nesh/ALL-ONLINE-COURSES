@@ -1,0 +1,29 @@
+body{
+    background-color: slategray;
+}
+
+h1{
+    color: #f00;
+    text-shadow: 2px 2px 4px black;
+    margin: auto;
+    text-align: center;
+}
+
+p{
+    color: yellow;
+}
+
+.class_practice{
+    color: lightcoral;
+}
+
+div{
+    color: purple;
+}
+
+#use_ids_sparingly{
+    border: 2px solid white;
+    color: aqua;
+    background-color: purple
+}
+
