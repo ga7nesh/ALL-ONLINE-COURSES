@@ -1,0 +1,107 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card text-white bg-dark mb-3">
+                        <div class="card-header">Details:</div>
+                        <div class="card-body"> 
+                          
+                          <div class="text-center">
+                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" width="200px;"class="img-thumbnail" alt="Icon of a user">  
+                          
+                            <h3 class="card-title">{{ user_nickname }}</h3>
+                          </div>
+
+                          {% if user_nickname != user.username and user.is_authenticated %}
+                            <form action="{% url 'profil' user_id %}" method="POST">
+                              {% csrf_token %}
+
+                              {% if follow_status == False %}
+                                <button type="submit" name="action" value="follow" class="btn btn-outline-info btn-block">Follow</button>
+                              {% else %}
+                                <button type="submit" name="action" value="unfollow" class="btn btn-outline-info btn-block">Unfollow</button>
+                              {% endif %}
+
+                            </form> 
+                          {% endif %}
+                          
+                          <hr>
+                          <p class="card-text">Followers: {{ user_followers }}</p>
+                          <hr>
+                          <p class="card-text">Following: {{ user_following }}</p>
+                          <hr>
+                          <p class="card-text">Date joined: {{ user_joined }}</p>
+                          <hr>
+                          <p class="card-text">Last seen: {{ user_seen }}</p>
+                          <hr>
+                          
+                        </div>
+                      </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card text-white bg-dark mb-3">
+                        <div class="card-header">Posts:</div>
+                        <div class="card-body">
+                           {% for post in user_posts %}
+
+                              <div class="card bg-blue text-white">
+                                <div class="card-body">
+                                  <p class="card-text">{{ post.post_content }}</p>
+                                    {% if user_nickname == user.username %}
+                                      <button type="button" data-postid="{{ post.id }}" class="btn btn-light btn-edit">Edit</button>
+                                    {% endif %}
+                                </div>
+                                <div class="card-footer">
+                                  <p>Added on: {{ post.post_date }} | By: {{ post.post_owner }}</p>
+                                  <button type="button" class="btn btn-primary like" data-postid="{{ post.id }}">
+                                    {% if post.id in user_likes %}
+                                      <span class="liked">&hearts;</span>
+                                    {% else %}
+                                    <span>&hearts;</span>
+                                    {% endif %} 
+                                    Likes <span class="badge badge-light">{{ post.likes_set.count }}</span>
+                                    <span class="sr-only">Likes</span>
+                                  </button>
+                                </div>
+                              </div>
+                              {% empty %}
+                              <h4>No posts to display yet.</h4>
+
+                           {% endfor %}
+                        </div>
+                      </div>
+
+                      <section style="margin-top: 20px;">
+                        <nav aria-label="Posts pagination">
+                          <ul class="pagination justify-content-center pagination-lg">
+                            {% if user_posts.has_previous %}
+                              <li class="page-item">
+                                <a class="page-link" href="{% url 'profil' user_id %}?page={{ user_posts.previous_page_number }}">Previous</a>
+                              </li>
+                            {% endif %}
+                  
+                            {% for page in user_posts.paginator.page_range %}
+                              <li class="page-item {% if page == user_posts.number %} active {% endif %}">
+                                <a class="page-link" href="{% url 'profil' user_id %}?page={{ page }}">{{ page }}</a>
+                              </li>
+                            {% endfor %}
+                  
+                            {% if user_posts.has_next %}
+                              <li class="page-item">
+                                <a class="page-link" href="{% url 'profil' user_id %}?page={{ user_posts.next_page_number }}">Next</a>
+                              </li>
+                            {% endif %}
+                          </ul>
+                        </nav>
+                      </section>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

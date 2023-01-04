@@ -1,0 +1,57 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+
+<section>
+    <div class="container">
+         
+        {% for post in followers_posts %}
+        <div class="card bg-dark text-white">
+            <div class="card-body">
+              <p class="card-text">{{ post.post_content }}</p>
+            </div>
+            <div class="card-footer text-muted">
+              <p>Added on: {{ post.post_date }} | By: <a href="{% url 'profil' post.post_owner.id %}">{{ post.post_owner }}</a></p>
+              <button type="button" class="btn btn-primary like" data-postid="{{ post.id }}">
+                {% if post.id in user_likes %}
+                  <span class="liked">&hearts;</span>
+                {% else %}
+                <span>&hearts;</span>
+                {% endif %} 
+                Likes <span class="badge badge-light">{{ post.likes_set.count }}</span>
+                <span class="sr-only">Likes</span>
+              </button>
+            </div>
+        </div>
+        {% empty %}
+            <h2>No activity to display</h2>
+        {% endfor %}
+
+        <section style="margin-top: 20px;">
+          <nav aria-label="Posts pagination">
+            <ul class="pagination justify-content-center pagination-lg">
+              {% if followers_posts.has_previous %}
+                <li class="page-item">
+                  <a class="page-link" href="{% url 'following' %}?page={{ followers_posts.previous_page_number }}">Previous</a>
+                </li>
+              {% endif %}
+        
+              {% for page in followers_posts.paginator.page_range %}
+                <li class="page-item {% if page == followers_posts.number %} active {% endif %}">
+                  <a class="page-link" href="{% url 'following' %}?page={{ page }}">{{ page }}</a>
+                </li>
+              {% endfor %}
+        
+              {% if followers_posts.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="{% url 'following' %}?page={{ followers_posts.next_page_number }}">Next</a>
+                </li>
+              {% endif %}
+            </ul>
+          </nav>
+        </section>
+
+    </div>
+</section>
+
+{% endblock %}

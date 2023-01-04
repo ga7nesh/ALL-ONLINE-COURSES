@@ -1,0 +1,26 @@
+body {
+    background-color: #131313;
+}
+
+textarea {
+    min-height: 400px;
+}
+
+hr {
+    border: 1px solid white;
+}
+
+b, .read > b {
+    color: #17a2b8 !important;
+}
+
+.read {
+    background-color: #fff;
+    color: #000;
+}
+
+.mail-compotent {
+    border: 2px solid #007bff;
+    margin-bottom: 20px;
+    padding: 10px;
+}

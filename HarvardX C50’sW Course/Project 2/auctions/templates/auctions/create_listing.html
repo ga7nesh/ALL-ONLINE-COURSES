@@ -1,0 +1,51 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+  <div class="container">
+    <header>
+        <h1>Create new listening:</h1>
+    </header>
+    {% if 'message' in request.session %}
+      <div class="alert alert-success" role="alert">
+        Your item has been added to the shop
+      </div>
+    {% endif %}
+    <form action="{% url 'create_listing' %}" method="post">
+      {% csrf_token %}
+
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" name="title" placeholder="Title">
+      </div>
+
+      <div class="input-group mb-3">
+        <textarea name="description" class="form-control" rows="8" cols="80" placeholder="Description"></textarea>
+      </div>
+
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" name="starting_bid" placeholder="starting bid">
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" name="image" placeholder="URL for an image">
+          </div>
+        </div>
+        <div class="col">
+          <div class="input-group mb-3">
+            <select name="category" class="form-control">
+              <option value="0">----</option>
+              {% for category in categories %}
+              <option value="{{ category.id }}">{{ category.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <input type="submit" class="btn btn-primary" value="Submit your listing">
+    </form>
+  </div>
+
+{% endblock %}
