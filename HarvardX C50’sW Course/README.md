@@ -1,4 +1,14 @@
-CS50 WEB PROGRAMMING FINAL PROJECT: NEXT CODER
+# CS50 Web Programming with Python and JavaScript
+Mine solutions for CS50's Web Programming with Python and JavaScript course.
+
+# Warning : before visiting this repo files, please read about CS50's "Academic Honesty rules".
+
+# Includes:
+Projects solutions
+Course info:
+Name: CS50's Web Programming with Python and JavaScript
+University: Harvard University
+WWW: https://cs50.harvard.edu/web/2020
 
 # Main idea
 I created a collaborative web application to learn how to code. Everyone can create a talk (which are basically just classes) and everyone can enroll in those classes. The main components are:
