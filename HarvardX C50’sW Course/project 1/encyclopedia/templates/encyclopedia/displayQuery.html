@@ -1,0 +1,14 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia - {{ query_title }}
+{% endblock %}
+
+{% block body %}
+
+    <h1>Result for the query:</h1>
+    <a href="{% url 'edit' entry=query_title %}" class="btn btn-info">Edit page</a>
+
+    <p> {% load md2 %} {{ query_result|markdown }} </p>
+
+{% endblock %} 
